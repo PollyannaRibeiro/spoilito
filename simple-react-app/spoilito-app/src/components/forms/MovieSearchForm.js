@@ -1,15 +1,7 @@
 import React from 'react';
+import ArrayHelper from '../../helpers/arrayHelper';
+import TypeForm from './movieSearchForms/typeForm';
 
-class ArrayHelper {
-    static remove(item, array) {
-        if (array.includes(item)) {
-            let index = array.indexOf(item);
-            array.splice(index, 1);
-        }
-    }
-}
-
-const TypeDefault = "type-any";
 const GenreDefault = "genre-no-preference";
 const TriggerDefault =  "trigger-none";
 
@@ -19,39 +11,14 @@ class MovieSearchForm extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            typeState: [TypeDefault],
-            genreState: [GenreDefault
-],
+            genreState: [GenreDefault],
             triggerState: [TriggerDefault ]
 
         };
         
-
-        this.handleInputTypeChange = this.handleInputTypeChange.bind(this);
         this.handleInputGenresChange = this.handleInputGenresChange.bind(this);
         this.handleInputTriggerChange = this.handleInputTriggerChange.bind(this);
 
-    }
-
-    handleInputTypeChange(event){
-        let newTypeArray = [...this.state.typeState]
-
-        if (event.target.checked) {
-            newTypeArray.push(event.target.name);
-        } else {
-            ArrayHelper.remove(event.target.name, newTypeArray);
-        }
-
-        // remove fist element of an array 
-        if (newTypeArray.length > 1) {
-           newTypeArray.shift();
-        } else if (newTypeArray.length == 0) {
-            newTypeArray.push(TypeDefault);
-        }
-
-        this.setState({
-            typeState: newTypeArray
-        });
     }
 
     handleInputGenresChange(event){
@@ -101,33 +68,8 @@ class MovieSearchForm extends React.Component {
         return (
             <div className="MovieSearchForm">
                 <form>
-                    <br></br>
-                    Choose the Type:
-                    <br></br>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            name="type-movie"  
-                            checked = {this.state.typeState.includes("type-movie")}
-                            onChange = {this.handleInputTypeChange}/>
-                        Movie
-                    </label>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            name="type-tv-show" 
-                            checked = {this.state.typeState.includes("type-tv-show")}
-                            onChange = {this.handleInputTypeChange}/>
-                        TV show
-                    </label>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            name="type-any" 
-                            checked = {this.state.typeState.includes("type-any")}
-                            onChange = {this.handleInputTypeChange}/>
-                        Any
-                    </label>
+                    
+                    <TypeForm />
 
                     <br></br>
                     Choose the genres:
