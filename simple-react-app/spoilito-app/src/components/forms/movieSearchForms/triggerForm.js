@@ -19,6 +19,8 @@ class TriggerForm extends React.Component{
         if (event.target.name == TriggerDefault){
             this.setState({
                 triggerState: [TriggerDefault]
+            }, function () {
+                this.props.onSubmitValue(this.state.triggerState);
             });
             return;
         }
@@ -39,6 +41,8 @@ class TriggerForm extends React.Component{
 
         this.setState({
             triggerState: newTriggerArray
+        }, function () {
+            this.props.onSubmitValue(this.state.triggerState);
         });
     }
 

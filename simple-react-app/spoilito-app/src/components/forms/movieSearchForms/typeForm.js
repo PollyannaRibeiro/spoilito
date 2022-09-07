@@ -31,7 +31,11 @@ class TypeForm extends React.Component{
 
         this.setState({
             typeState: newTypeArray
+        }, function () {
+            this.props.onSubmitValue(this.state.typeState);
         });
+
+        
     }
 
     render(){

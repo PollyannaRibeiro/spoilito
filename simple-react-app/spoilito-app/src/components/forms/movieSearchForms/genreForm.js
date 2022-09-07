@@ -19,6 +19,8 @@ class GenreForm extends React.Component{
         if (event.target.name == GenreDefault){
             this.setState({
                 genreState: [GenreDefault]
+            }, function () {
+                this.props.onSubmitValue(this.state.genreState);
             });
             return;
         }
@@ -39,6 +41,8 @@ class GenreForm extends React.Component{
 
         this.setState({
             genreState: newArray
+        }, function () {
+            this.props.onSubmitValue(this.state.genreState);
         });
     }
 
