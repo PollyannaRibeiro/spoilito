@@ -8,14 +8,16 @@ cursor.execute("CREATE TABLE IF NOT EXISTS unconsentingMedia "
                "(uncMedia_id INTEGER PRIMARY KEY, "
                "title TEXT not null, "
                "sexualAssault BOOLEAN, "
+               "sexualHar BOOLEAN,  "
                "childAbuse BOOLEAN, "
                "yearOfRelease INTEGER, "
                "type TEXT)")
 
 
-cursor.execute("CREATE TABLE IF NOT EXISTS uncMediaGenres (uncMedia_id INTEGER, genre_name TEXT, "
+cursor.execute("CREATE TABLE IF NOT EXISTS uncMediaGenres (uncMedia_id INTEGER, genre_id INTEGER, "
                "FOREIGN KEY(uncMedia_id) REFERENCES unconsentingMedia(uncMedia_id), "
-               "PRIMARY KEY(uncMedia_id, genre_name))")
+               "FOREIGN KEY(genre_id) REFERENCES genres(genre_id), "
+               "PRIMARY KEY(uncMedia_id, genre_id))")
 
 
 with open('data/unconsentingMedia/list.csv', 'r') as uncList:
@@ -39,8 +41,15 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
         # print(myList)
         media_id = myList[0]
         title = myList[1]
+        sexualHar = None
         sexualAssault = None
         childAbuse = None
+
+        # GET SEXUAL HAR AND CHILD ABUSE
+        if myList[14] == "true":
+            sexualHar = True
+        else:
+            sexualHar = False
 
         if myList[16] == "true":
             childAbuse = True
@@ -64,8 +73,7 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
 
         # GET SEXUAL ASSAULT INFO
 
-        if (myList[13] == "true" or myList[14] == "true" or
-                myList[18] == "true" or myList[19] == "true" or myList[20] == "true"):
+        if (myList[13] == "true" or myList[18] == "true" or myList[19] == "true" or myList[20] == "true"):
             sexualAssault = True
         else:
             sexualAssault = False
@@ -73,18 +81,41 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
         # GET ONLY MOVIES OR TV SHOW INFO
 
         if type_name == "movie" or type_name == "TV show":
-            to_unconsentingMedia_db = [media_id, title, sexualAssault, childAbuse, yearOfRelease, type_name]
+            to_unconsentingMedia_db = [media_id, title, sexualAssault, sexualHar, childAbuse, yearOfRelease, type_name]
 
             cursor.executemany(
-                "INSERT INTO unconsentingMedia (uncMedia_id, title, sexualAssault, childAbuse, yearOfRelease, type) VALUES (?, ?, ?, ?, ?, ?);", (to_unconsentingMedia_db, ))
+                "INSERT INTO unconsentingMedia (uncMedia_id, title, sexualAssault, sexualHar, childAbuse, yearOfRelease, type) VALUES (?, ?, ?, ?, ?, ?, ?);", (to_unconsentingMedia_db, ))
 
             print(to_unconsentingMedia_db)
+
             for genre in genre_names:
-                to_mediaGenres_db = [media_id, genre]
-                cursor.executemany(
-                    "INSERT INTO uncMediaGenres (uncMedia_id, genre_name) VALUES (?, ?);", (to_mediaGenres_db, ))
-                print(to_mediaGenres_db)
-cursor.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'unconsentingMedia' AND type = 'table'")
+
+                if genre is None:
+                    continue
+
+                genre = genre.lower()
+
+                if genre == 'Sci-Fi':
+                    genre = 'scifi'
+                elif genre == 'History':
+                    genre = 'historical'
+                elif genre == 'anime':
+                    genre = 'animation'
+                elif genre == 'Crime':
+                    genre = 'thriller'
+
+                genre_id_row = cursor.execute("""SELECT genre_id FROM genres WHERE genre_name='%s'""" % (genre))
+                genre_id_row = genre_id_row.fetchone()
+                if genre_id_row is None:
+                    print("None")
+                    continue
+                else:
+                    genre_id = genre_id_row[0]
+                    to_mediaGenres_db = [media_id, genre_id]
+                    cursor.executemany(
+                        "INSERT or IGNORE INTO uncMediaGenres (uncMedia_id, genre_id) VALUES (?, ?);", (to_mediaGenres_db, ))
+                    print(to_mediaGenres_db)
+# cursor.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'unconsentingMedia' AND type = 'table'")
 
 connection.commit()
 connection.close()
