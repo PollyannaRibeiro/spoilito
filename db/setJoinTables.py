@@ -9,7 +9,7 @@ import pandas as pd
 #                "GROUP BY imdb.imdb_id, unconsentingMedia.uncMedia_id ; ")
 #
 # cursor.execute("SELECT unconsentingMedia.uncMedia_id, unconsentingMedia.title from unconsentingMedia")
-
+#
 #
 # def dict_factory(cursor, row):
 #     d = {}
@@ -76,7 +76,7 @@ for media in uncMediaDictResult:
                 moderation.append([media, [x for x in filteringType]])
 
     if toJointedDb is not None:
-        cursor.executemany("INSERT INTO imdbUnconsetingMediaJointed (imdb_id, uncMedia_id) VALUES (?, ?);", (toJointedDb,))
+        cursor.executemany("INSERT or IGNORE INTO imdbUnconsetingMediaJointed (imdb_id, uncMedia_id) VALUES (?, ?);", (toJointedDb,))
 
     if len(moderation) > 0:
         print(moderation)

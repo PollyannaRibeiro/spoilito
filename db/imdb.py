@@ -3,7 +3,7 @@ import pandas as pd
 
 connection = sqlite3.connect('movies.db')
 cursor = connection.cursor()
-
+#
 with open('data/imdb/title.basics.tsv', 'r') as imdbTitleBasicsList:
     dr = pd.read_table(imdbTitleBasicsList, low_memory=False)
 
@@ -15,6 +15,7 @@ with open('data/imdb/title.basics.tsv', 'r') as imdbTitleBasicsList:
         imdb_endYear = None
         imdb_type = str(dr["titleType"][i])
         imdb_averageRating = None
+
 
         # =====  # GET ONLY MOVIES OR TV SHOW TYPE =====
         # IMDB TITLE TYPES =  {'short', 'tvMovie', 'tvSeries', 'tvPilot', 'tvShort', 'tvSpecial', 'tvMiniSeries', 'video', 'movie', 'videoGame', 'tvEpisode'}
@@ -47,9 +48,40 @@ with open('data/imdb/title.basics.tsv', 'r') as imdbTitleBasicsList:
 
         genres = (str(dr["genres"][i])).split(",")
         for genre in genres:
-            to_imdbGenres = [imdb_id, genre]
-            cursor.executemany(
-                "INSERT INTO imdbGenres (imdb_id, genre_name) VALUES (?, ?);", (to_imdbGenres,))
+
+            if genre is None:
+                continue
+
+            genre = genre.lower()
+
+            if genre == 'Sci-Fi':
+                genre = 'scifi'
+            elif genre == 'History':
+                genre = 'historical'
+            elif genre == 'anime':
+                genre = 'animation'
+            elif genre == 'Crime':
+                genre = 'thriller'
+
+
+            genre_id_row = cursor.execute("""SELECT genre_id FROM genres WHERE genre_name='%s'""" % (genre))
+            genre_id_row = genre_id_row.fetchone()
+            if genre_id_row is None:
+                continue
+            else:
+                genre_id = genre_id_row[0]
+                to_imdbGenres = [imdb_id, genre_id]
+                cursor.executemany(
+                    "INSERT or IGNORE INTO imdbGenres (imdb_id, genre_id) VALUES (?, ?);", (to_imdbGenres, ))
+                print(to_imdbGenres)
+
+
+            # cursor.execute("SELECT genre_id from genres where genre_name VALUES(?);", (genre))
+            # genre_id == cursor.fetchone()
+            #
+            # to_imdbGenres = [imdb_id, genre_id]
+            # cursor.executemany(
+            #     "INSERT INTO imdbGenres (imdb_id, genre_name) VALUES (?, ?);", (to_imdbGenres,))
 
     # cursor.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'imdb' AND type = 'table'")
 
@@ -67,7 +99,14 @@ with open('data/imdb/title.ratings.tsv', 'r') as imdbTitleRatings:
                 "SET averageRating = ?, numVotes = ? "
                 "WHERE imdb_id = ?;", (to_rating,))
 
+# ADDED COLUMN
     # cursor.execute("SELECT * from imdb")
     # print(cursor.fetchall())
+
+# ADDED POSTER PATH EXAMPLE
+# cursor.execute("ALTER TABLE imdb ADD poster_path TEXT")
+# cursor.fetchall()
+
+cursor.execute("UPDATE imdb SET poster_path = 'http://image.tmdb.org/t/p/w500//w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg'")
 connection.commit()
 connection.close()

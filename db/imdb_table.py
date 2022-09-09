@@ -16,9 +16,10 @@ cursor.execute("CREATE TABLE IF NOT EXISTS imdb "
 
 cursor.execute("CREATE TABLE IF NOT EXISTS imdbGenres "
                "(imdb_id TEXT, "
-               "genre_name TEXT, "
+               "genre_id TEXT, "
                "FOREIGN KEY(imdb_id) REFERENCES imdb(imdb_id), "
-               "PRIMARY KEY(imdb_id, genre_name))")
+               "FOREIGN KEY(genre_id) REFERENCES genres(genre_id), "
+               "PRIMARY KEY(imdb_id, genre_id))")
 
 cursor.execute("SELECT * from imdb")
 

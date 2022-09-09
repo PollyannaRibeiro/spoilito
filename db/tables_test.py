@@ -96,7 +96,20 @@ cursor = connection.cursor()
 #
 
 
-cursor.execute("SELECT COUNT(*) from imdbUnconsetingMediaJointed ")
+cursor.execute("SELECT count(*) from jointedGenres")
 print(cursor.fetchall())
+
+
+
+# cursor.execute("SELECT * FROM genres")
+# genre = None
+# genre_id_row = cursor.execute("""SELECT genre_id FROM genres WHERE genre_name='%s'""" % (genre))
+# if genre_id_row.fetchone()[0] is None:
+#     print("None")
+# else:
+#     print(genre_id_row.fetchone()[0])
+#
+# cursor.execute("SELECT DISTINCT genre_name FROM uncMediaGenres")
+# print(cursor.fetchall())
 connection.commit()
 connection.close()

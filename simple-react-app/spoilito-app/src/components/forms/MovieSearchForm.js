@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ArrayHelper from '../../helpers/arrayHelper';
 import TypeForm from './movieSearchForms/typeForm';
 import GenreForm from './movieSearchForms/genreForm';
@@ -65,6 +65,8 @@ class MovieSearchForm extends React.Component {
 
         event.preventDefault();
     }
+
+
 
     render(){
         return (
