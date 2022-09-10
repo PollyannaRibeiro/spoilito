@@ -6,10 +6,78 @@ body {
   height: 100%
 }
 
+// poster
 .cards-item{
     img{
         width: 200px;
         height: auto;
         object-fit: cover;
     }
+}
+
+.bot-div{
+  #chatwrapper{
+    z-index: 100;
+  }
+}
+
+// layout forms 
+.layout-form{
+  text-align: left;
+
+  h2{
+    font-size: 1.5em;
+    line-height: 2;
+    margin-bottom: 0.2em;
+  }
+
+  input{
+    margin-right: 1rem;
+  }
+  ul{
+    list-style: none;
+    li{ line-height: 2;
+      label{
+        padding-left: 0;
+      }
+    }
+    
+  }
+
+  label{
+    padding-left: 2em;
+  }
+}
+
+.result-col{
+  .empty-search{
+    background-image: url("../img/daniel-mingook-kim-wTkKb4eQOQo-unsplash.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 200vh;
+    width: 75vw;
+    opacity: 0.8;
+    
+    .overlayer-color{
+      background-color: black;
+      opacity: 0.5;
+      height: 200vh;
+      width: 75vw;
+    }
+
+    h2{
+      font-size: 3rem;
+      text-align: right;
+      padding-left: 0;
+      padding-top: 1em;
+      padding-right: 10em;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 100;
+      ;
+      
+    }
+  }
+  overflow-x: hidden;
+
 }
