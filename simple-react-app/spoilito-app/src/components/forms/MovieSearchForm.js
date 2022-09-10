@@ -5,8 +5,8 @@ import GenreForm from './movieSearchForms/genreForm';
 import TriggerForm from './movieSearchForms/triggerForm';
 
 
-const TypeDefault = "type-any";
-const GenreDefault = "genre-no-preference";
+const TypeDefault = "movie";
+const GenreDefault = "no-preference";
 const TriggerDefault =  "trigger-none";
 
 class MovieSearchForm extends React.Component {
@@ -17,7 +17,6 @@ class MovieSearchForm extends React.Component {
             typeValue: [TypeDefault],
             genreValue: [GenreDefault],
             triggerValue: [TriggerDefault]
-
         };
 
         this.handleTypeChanges = this.handleTypeChanges.bind(this);
@@ -25,6 +24,21 @@ class MovieSearchForm extends React.Component {
         this.handleTriggerChanges = this.handleTriggerChanges.bind(this);
 
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    // how it will be passed to the query
+    componentDidUpdate(prevProps) {
+        if (prevProps.typeValue.join(".") === this.props.typeValue.join(".") &&
+            prevProps.genreValue.join(".") === this.props.genreValue.join(".")&&
+            prevProps.triggerValue.join(".") === this.props.triggerValue.join(".")) {
+            return;
+        }
+
+        this.setState({
+            typeValue: this.props.typeValue,
+            genreValue: this.props.genreValue,
+            triggerValue: this.props.triggerValue,
+        });
     }
 
 
@@ -40,21 +54,21 @@ class MovieSearchForm extends React.Component {
 
     handleGenreChanges(event){
 
-        let genreArray = []
-        genreArray.push(event);
+        // let genreArray = []
+        // genreArray.push(event);
 
         this.setState({
-            genreValue: genreArray
+            genreValue: event
         });
     }
 
     handleTriggerChanges(event){
 
-        let triggerArray = []
-        triggerArray.push(event);
+        // let triggerArray = []
+        // triggerArray.push(event);
 
         this.setState({
-            triggerValue: triggerArray
+            triggerValue: event
         });
     }
 
@@ -64,6 +78,8 @@ class MovieSearchForm extends React.Component {
         console.log("form submitted: " + this.state.triggerValue);
 
         event.preventDefault();
+
+        this.props.onChangeSearch(this.state.typeValue, this.state.genreValue, this.state.triggerValue);
     }
 
 
@@ -74,8 +90,8 @@ class MovieSearchForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     
                     <TypeForm onSubmitValue={this.handleTypeChanges}/>
-                    <GenreForm onSubmitValue={this.handleGenreChanges}/>
-                    <TriggerForm onSubmitValue={this.handleTriggerChanges} />
+                    <GenreForm genreState={this.state.genreValue} onSubmitValue={this.handleGenreChanges}/>
+                    <TriggerForm triggerState={this.state.triggerValue} onSubmitValue={this.handleTriggerChanges} />
                     
                     <br></br>
                     <input type="submit" value="Submit" />

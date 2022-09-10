@@ -6,6 +6,15 @@ import LexChat from 'react-lex-plus';
 class CustomChatbot extends LexChat {
     componentDidUpdate(prevProps, prevState) {
         super.componentDidUpdate(prevProps, prevState);
+        if (prevState.sessionAttributes.mediaType === this.state.sessionAttributes.mediaType &&
+            prevState.sessionAttributes.genre === this.state.sessionAttributes.genre &&
+            prevState.sessionAttributes.trigger === this.state.sessionAttributes.trigger) {
+            return
+        }
+
+        this.props.onChangeFilters(this.state.sessionAttributes.mediaType, 
+                                   this.state.sessionAttributes.genre,
+                                   this.state.sessionAttributes.trigger);
         console.log("States: " + this.state.sessionAttributes.genre + " " + this.state.sessionAttributes.mediaType + " " + this.state.sessionAttributes.trigger);
 
     }
@@ -15,11 +24,10 @@ class LexChatbot extends React.Component{
 
     constructor(props){
         super(props);
-        this.state={
-            type:[],
-            genre: [],
-            trigeer: []
-        }; 
+    }
+
+    onChange(mediaType, genre, trigger){
+        this.props.onChangeFilters(mediaType, genre, trigger);
     }
 
     render(){
@@ -37,6 +45,7 @@ class LexChatbot extends React.Component{
                 greeting={"Hi, how can I help, today?"}
                 debugMode={true}
                 sessionAttributes={{ola: "Hello"}}
+                onChangeFilters={this.onChange.bind(this)}
                 />;
             </>
         );

@@ -1,7 +1,7 @@
 import React from 'react';
 import ArrayHelper from '../../../helpers/arrayHelper';
 
-const TypeDefault = "type-any";
+const TypeDefault = "movie";
 
 class TypeForm extends React.Component{
     constructor(props){
@@ -47,26 +47,18 @@ class TypeForm extends React.Component{
             <label>
                 <input 
                     type="checkbox" 
-                    name="type-movie"  
-                    checked = {this.state.typeState.includes("type-movie")}
+                    name="movie"  
+                    checked = {this.state.typeState.includes("movie")}
                     onChange = {this.handleInputTypeChange}/>
                 Movie
             </label>
             <label>
                 <input 
                     type="checkbox" 
-                    name="type-tv-show" 
-                    checked = {this.state.typeState.includes("type-tv-show")}
+                    name="TV show" 
+                    checked = {this.state.typeState.includes("TV show")}
                     onChange = {this.handleInputTypeChange}/>
                 TV show
-            </label>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="type-any" 
-                    checked = {this.state.typeState.includes("type-any")}
-                    onChange = {this.handleInputTypeChange}/>
-                Any
             </label>
         </>
         );
