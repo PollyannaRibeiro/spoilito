@@ -42,6 +42,19 @@ class App extends React.Component {
     if (newGenres != undefined) {
       genre = [newGenres.toLowerCase()];
     }
+    if (newTriggers != undefined) {
+      let mapping = {
+        "sexual content": "isAdult",
+        "sexual harassment": "sexualHar",
+        "child abuse": "childAbuse",
+        "rape or sexual assault": "sexualAssault" 
+      }
+
+      let value = mapping[newTriggers];
+      if (value != undefined) {
+        trigger = [value];
+      }
+    }
     
     this.setState({
       typeValue: type,
@@ -58,38 +71,28 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            Spoilito
-            <p>Welcome to your entertainment assistant</p>
+            <h1>Welcome to your entertainment assistant</h1>
+            <p>Talk with me on the chatBot or fill out the form</p>
           </header>
           <main>
-            <ul>
-              <li>
-                <Link to="/">Talk with me below</Link>
+              <div className='container text-left'>
                 <LexChatbot onChangeFilters={this.changeBotFilters.bind(this)}/>
-                <MovieSearchForm 
-                                typeValue = {this.state.typeValue} 
-                                genreValue = {this.state.genreValue}
-                                triggerValue = {this.state.triggerValue}
-                                onChangeSearch={this.changeSearchFilter.bind(this)}/>
-                <MovieGrid 
-                          typeValue = {this.state.typeValue} 
-                          genreValue = {this.state.genreValue}
-                          triggerValue = {this.state.triggerValue}/>
-              </li>
-              <li>
-                <Link to="/searchEntertainmentForm">Filter list</Link>
-              </li>
-              <li>
-                <Link to="/movieGrid">Flask</Link>
-              </li>
-              <li>
-                <Link to="/results">Results</Link>
-              </li>
-            </ul>
+                <div className='row'>
+                  <MovieSearchForm 
+                                  typeValue = {this.state.typeValue} 
+                                  genreValue = {this.state.genreValue}
+                                  triggerValue = {this.state.triggerValue}
+                                  onChangeSearch={this.changeSearchFilter.bind(this)}/>
+                  <MovieGrid 
+                            typeValue = {this.state.typeValue} 
+                            genreValue = {this.state.genreValue}
+                            triggerValue = {this.state.triggerValue}/>
+                </div>
+              </div>
           </main>
   
           <Routes>
-            <Route exact 
+            {/* <Route exact 
                     path="/searchEntertainmentForm" 
                     element={
                     <div>
@@ -111,7 +114,7 @@ class App extends React.Component {
                                 genreValue = {this.state.genreValue}
                                 triggerValue = {this.state.triggerValue}/>}/>
             <Route exact path="/results" element={<Results/>}/>
-            {/* <Route path="*" element={<NotFound/>}/> */}
+            <Route path="*" element={<NotFound/>}/> */}
           </Routes>
         </div>
       </Router>

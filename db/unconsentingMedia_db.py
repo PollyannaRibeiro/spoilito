@@ -11,7 +11,8 @@ cursor.execute("CREATE TABLE IF NOT EXISTS unconsentingMedia "
                "sexualHar BOOLEAN,  "
                "childAbuse BOOLEAN, "
                "yearOfRelease INTEGER, "
-               "type TEXT)")
+               "type TEXT, "
+               "poster_path TEXT)")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS uncMediaGenres (uncMedia_id INTEGER, genre_id INTEGER, "
@@ -58,6 +59,7 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
 
         yearOfRelease = myList[11]
         type_name = myList[5]
+        poster_path = myList[9] if "http" in myList[9] else "https://www.unconsentingmedia.org/content/"+myList[9]
         genre_names = []
 
         genres_options = ["action", "adventure", "animation", "anime", "anthology", "art", "biography", "childrens",
@@ -81,10 +83,10 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
         # GET ONLY MOVIES OR TV SHOW INFO
 
         if type_name == "movie" or type_name == "TV show":
-            to_unconsentingMedia_db = [media_id, title, sexualAssault, sexualHar, childAbuse, yearOfRelease, type_name]
+            to_unconsentingMedia_db = [media_id, title, sexualAssault, sexualHar, childAbuse, yearOfRelease, type_name, poster_path]
 
             cursor.executemany(
-                "INSERT INTO unconsentingMedia (uncMedia_id, title, sexualAssault, sexualHar, childAbuse, yearOfRelease, type) VALUES (?, ?, ?, ?, ?, ?, ?);", (to_unconsentingMedia_db, ))
+                "INSERT INTO unconsentingMedia (uncMedia_id, title, sexualAssault, sexualHar, childAbuse, yearOfRelease, type, poster_path) VALUES (?, ?, ?, ?, ?, ?, ?, ? );", (to_unconsentingMedia_db,))
 
             print(to_unconsentingMedia_db)
 
@@ -116,6 +118,9 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
                         "INSERT or IGNORE INTO uncMediaGenres (uncMedia_id, genre_id) VALUES (?, ?);", (to_mediaGenres_db, ))
                     print(to_mediaGenres_db)
 # cursor.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'unconsentingMedia' AND type = 'table'")
+
+# cursor.execute("ALTER TABLE unconsentingMedia ADD poster_path TEXT")
+# cursor.fetchall()
 
 connection.commit()
 connection.close()

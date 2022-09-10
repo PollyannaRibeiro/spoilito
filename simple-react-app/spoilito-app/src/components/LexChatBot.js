@@ -11,11 +11,16 @@ class CustomChatbot extends LexChat {
             prevState.sessionAttributes.trigger === this.state.sessionAttributes.trigger) {
             return
         }
+        
+        let genre = undefined;
+        if (this.state.sessionAttributes.genre != 'No preference'){
+            genre = this.state.sessionAttributes.genre;
+        }
 
+        console.log("🤖 States: " + genre + " " + this.state.sessionAttributes.mediaType + " " + this.state.sessionAttributes.trigger);
         this.props.onChangeFilters(this.state.sessionAttributes.mediaType, 
-                                   this.state.sessionAttributes.genre,
+                                   genre,
                                    this.state.sessionAttributes.trigger);
-        console.log("States: " + this.state.sessionAttributes.genre + " " + this.state.sessionAttributes.mediaType + " " + this.state.sessionAttributes.trigger);
 
     }
 }
@@ -33,6 +38,7 @@ class LexChatbot extends React.Component{
     render(){
         return(
             <>
+            <div className='bot-div'>
             <CustomChatbot
                 botName="SpoilitoBot"
                 IdentityPoolId="eu-west-2:0d632752-c4b8-4e03-87ad-98d7ff163952"
@@ -47,6 +53,7 @@ class LexChatbot extends React.Component{
                 sessionAttributes={{ola: "Hello"}}
                 onChangeFilters={this.onChange.bind(this)}
                 />;
+            </div>
             </>
         );
     }

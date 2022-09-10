@@ -21,7 +21,7 @@ class MovieGrid extends React.Component {
             return;
         }
 
-        console.log("🤷🏼", this.props.typeValue, this.props.genreValue, this.props.triggerValue);
+        console.log("🚀", this.props.typeValue, this.props.genreValue, this.props.triggerValue);
 
         let params = new URLSearchParams();
         params.append("type", this.props.typeValue);
@@ -50,9 +50,15 @@ class MovieGrid extends React.Component {
     }
 
     renderResults() {
+
         if (this.state.data.length == 0) {
+            return <div className='empty-search'> <div className='overlayer-color'><h2>A search engine for tracking emotional content and triggers</h2></div> </div>
+        } else if(this.state.data.length == 1){
+            return <p>Not Found</p>
+        }else if(this.state.data.length == 2){
             return <p>Loading...</p>
-        } else {
+        }
+        else {
             return <div className='h-100 container align-items-center justify-content-center'>
                 <div className='row'> 
                     <h1>Results: </h1>
@@ -76,12 +82,13 @@ class MovieGrid extends React.Component {
                     )};
                 </div>
             </div>
+            
         }
     }
     
     render() {
         return <> 
-        <div>
+        <div className='col-9 result-col'>
             { this.renderResults() }
         </div>
         </>
