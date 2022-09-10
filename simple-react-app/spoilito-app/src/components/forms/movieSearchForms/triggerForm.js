@@ -13,6 +13,27 @@ class TriggerForm extends React.Component{
         this.handleInputTriggerChange = this.handleInputTriggerChange.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        console.log("😰", this.props.triggerState);
+
+        if (prevProps.triggerState === this.props.triggerState ||
+            prevProps.triggerState.join(".") === this.props.triggerState.join(".")) {
+            return;
+        }
+
+        console.log("🥶🥶", this.props.triggerState);
+
+        if (this.props.genreState == []){
+            this.setState({
+                triggerState: TriggerDefault
+            });
+        } else {
+            this.setState({
+                triggerState: this.props.triggerState
+            });
+        }
+    }
+
     handleInputTriggerChange(event){
 
         // deselect everything if default is selected
@@ -42,7 +63,11 @@ class TriggerForm extends React.Component{
         this.setState({
             triggerState: newTriggerArray
         }, function () {
-            this.props.onSubmitValue(this.state.triggerState);
+            if (this.state.triggerState[0] == TriggerDefault){
+                this.props.onSubmitValue([]);
+            } else {
+                this.props.onSubmitValue(this.state.triggerState);
+            } 
         });
     }
 
@@ -63,32 +88,32 @@ class TriggerForm extends React.Component{
             <label>
                 <input 
                     type="checkbox" 
-                    name="trigger-adult" 
-                    checked={this.state.triggerState.includes("trigger-adult")}
+                    name="isAdult" 
+                    checked={this.state.triggerState.includes("isAdult")}
                     onChange={this.handleInputTriggerChange}/>
                 18+
             </label>
             <label>
                 <input 
                     type="checkbox" 
-                    name="trigger-child-abuse" 
-                    checked={this.state.triggerState.includes("trigger-child-abuse")}
+                    name="childAbuse" 
+                    checked={this.state.triggerState.includes("childAbuse")}
                     onChange={this.handleInputTriggerChange}/>
                 child sex abuse
             </label>
             <label>
                 <input 
                     type="checkbox" 
-                    name="trigger-sexual-harassment" 
-                    checked={this.state.triggerState.includes("trigger-sexual-harassment")}
+                    name="sexualHar" 
+                    checked={this.state.triggerState.includes("sexualHar")}
                     onChange={this.handleInputTriggerChange}/>
                 sexual harassment
             </label>
             <label>
                 <input 
                     type="checkbox" 
-                    name="trigger-sexual-assault" 
-                    checked={this.state.triggerState.includes("trigger-sexual-assault")}
+                    name="sexualAssault" 
+                    checked={this.state.triggerState.includes("sexualAssault")}
                     onChange={this.handleInputTriggerChange}/>
                 sexual assault or rape
             </label>

@@ -31,7 +31,6 @@ class MovieGrid extends React.Component {
         if (this.props.triggerValue.length > 0) {
             params.append("triggers", this.props.triggerValue.join(","));
         }
-        
         fetch("/movies?" + params).then(
             res => res.json()
         ).then(
@@ -44,20 +43,48 @@ class MovieGrid extends React.Component {
         );
     }
 
+    // random and limited to show 48 options per search 
+    getRandomItems(arr){
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 48)
+    }
+
     renderResults() {
         if (this.state.data.length == 0) {
             return <p>Loading...</p>
         } else {
-            return this.state.data.map ( (item) => 
-                <p key={item[0]}> { item[0] } </p>
-            );
+            return <div className='h-100 container align-items-center justify-content-center'>
+                <div className='row'> 
+                    <h1>Results: </h1>
+                </div>
+                <div className='row'>
+                    { this.getRandomItems(this.state.data).map((item) =>
+                        <div className='col-3 cards-item' key={item[0]}> 
+                            <br/>
+                            <p>{item[0]}</p>
+                            <div className='row'>
+                                <div className='offset-6 col-2'>
+                                    <span className="material-icons">star_rate</span>
+                                </div>
+                                <div className='col-2'>
+                                    <p className='text-right'>{item[1]}</p>
+                                </div>
+                            <img src={item[2]}
+                            alt={'Title: ' + item[0]}/>
+                            </div>
+                        </div>
+                    )};
+                </div>
+            </div>
         }
     }
     
     render() {
-        return <div>
+        return <> 
+        <div>
             { this.renderResults() }
         </div>
+        </>
     }
 }
 

@@ -22,11 +22,17 @@ class GenreForm extends React.Component{
         }
 
         console.log("🥶🥶", this.props.genreState);
-
-
-        this.setState({
-            genreState: this.props.genreState
-        });
+        
+        if (this.props.genreState == []){
+            this.setState({
+                genreState: GenreDefault
+            });
+        } else {
+            this.setState({
+                genreState: this.props.genreState
+            });
+        }
+       
     }
 
     handleInputGenresChange(event){
@@ -58,7 +64,11 @@ class GenreForm extends React.Component{
         this.setState({
             genreState: newArray
         }, function () {
-            this.props.onSubmitValue(this.state.genreState);
+            if (this.state.genreState[0] == GenreDefault){
+                this.props.onSubmitValue([]);
+            } else {
+                this.props.onSubmitValue(this.state.genreState);
+            } 
         });
     }
 

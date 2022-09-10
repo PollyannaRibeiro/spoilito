@@ -43,30 +43,18 @@ class MovieSearchForm extends React.Component {
 
 
     handleTypeChanges(event){
-
-        let typeArray = []
-        typeArray.push(event);
-
         this.setState({
-            typeValue: typeArray
+            typeValue: event
         });
     }
 
     handleGenreChanges(event){
-
-        // let genreArray = []
-        // genreArray.push(event);
-
         this.setState({
             genreValue: event
         });
     }
 
     handleTriggerChanges(event){
-
-        // let triggerArray = []
-        // triggerArray.push(event);
-
         this.setState({
             triggerValue: event
         });
