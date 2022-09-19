@@ -1,27 +1,17 @@
 import sqlite3
-import pandas as pd
 
-#
-# cursor.execute("INSERT INTO imdb_join_unconsetingMedia "
-#                "SELECT imdb.imdb_id, unconsentingMedia.uncMedia_id "
-#                "FROM imdb, unconsentingMedia "
-#                "WHERE unconsentingMedia.title = imdb.title "
-#                "GROUP BY imdb.imdb_id, unconsentingMedia.uncMedia_id ; ")
-#
-# cursor.execute("SELECT unconsentingMedia.uncMedia_id, unconsentingMedia.title from unconsentingMedia")
-#
-#
-# def dict_factory(cursor, row):
-#     d = {}
-#     for idx, col in enumerate(cursor.description):
-#         d[col[0]] = row[idx]
-#     return d
-#
-# connection = sqlite3.connect('movies.db')
-# connection.row_factory = dict_factory
-# cursor = connection.cursor()
-# cursor.execute("SELECT 1 as a FROM unconsentingMedia")
-# print(cursor.fetchone()["a"])
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+
+connection = sqlite3.connect('movies.db')
+connection.row_factory = dict_factory
+cursor = connection.cursor()
+cursor.execute("SELECT 1 as a FROM unconsentingMedia")
+print(cursor.fetchone()["a"])
 
 
 connection = sqlite3.connect('movies.db')
@@ -32,7 +22,6 @@ uncMediaDictResult = [dict(row) for row in cursor.fetchall()]
 
 cursor.execute("SELECT imdb_id, title, startYear, type FROM imdb where startYear > 1980; ")
 imdbDictResult = [dict(row) for row in cursor.fetchall()]
-# print(len(imdbDictResult))
 
 for media in uncMediaDictResult:
 

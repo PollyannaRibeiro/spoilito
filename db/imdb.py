@@ -3,7 +3,7 @@ import pandas as pd
 
 connection = sqlite3.connect('movies.db')
 cursor = connection.cursor()
-#
+
 with open('data/imdb/title.basics.tsv', 'r') as imdbTitleBasicsList:
     dr = pd.read_table(imdbTitleBasicsList, low_memory=False)
 
@@ -75,16 +75,6 @@ with open('data/imdb/title.basics.tsv', 'r') as imdbTitleBasicsList:
                     "INSERT or IGNORE INTO imdbGenres (imdb_id, genre_id) VALUES (?, ?);", (to_imdbGenres, ))
                 print(to_imdbGenres)
 
-
-            # cursor.execute("SELECT genre_id from genres where genre_name VALUES(?);", (genre))
-            # genre_id == cursor.fetchone()
-            #
-            # to_imdbGenres = [imdb_id, genre_id]
-            # cursor.executemany(
-            #     "INSERT INTO imdbGenres (imdb_id, genre_name) VALUES (?, ?);", (to_imdbGenres,))
-
-    # cursor.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'imdb' AND type = 'table'")
-
 with open('data/imdb/title.ratings.tsv', 'r') as imdbTitleRatings:
     dr2 = pd.read_table(imdbTitleRatings, low_memory=False)
 
@@ -99,14 +89,5 @@ with open('data/imdb/title.ratings.tsv', 'r') as imdbTitleRatings:
                 "SET averageRating = ?, numVotes = ? "
                 "WHERE imdb_id = ?;", (to_rating,))
 
-# ADDED COLUMN
-    # cursor.execute("SELECT * from imdb")
-    # print(cursor.fetchall())
-
-# ADDED POSTER PATH EXAMPLE
-# cursor.execute("ALTER TABLE imdb ADD poster_path TEXT")
-# cursor.fetchall()
-
-cursor.execute("UPDATE imdb SET poster_path = 'http://image.tmdb.org/t/p/w500//w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg'")
 connection.commit()
 connection.close()

@@ -117,10 +117,6 @@ with open('data/unconsentingMedia/list.csv', 'r') as uncList:
                     cursor.executemany(
                         "INSERT or IGNORE INTO uncMediaGenres (uncMedia_id, genre_id) VALUES (?, ?);", (to_mediaGenres_db, ))
                     print(to_mediaGenres_db)
-# cursor.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'unconsentingMedia' AND type = 'table'")
-
-# cursor.execute("ALTER TABLE unconsentingMedia ADD poster_path TEXT")
-# cursor.fetchall()
 
 connection.commit()
 connection.close()
