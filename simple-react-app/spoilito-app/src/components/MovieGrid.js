@@ -52,7 +52,11 @@ class MovieGrid extends React.Component {
     renderResults() {
 
         if (this.state.data.length == 0) {
-            return <div className='empty-search'> <div className='overlayer-color'><h2>A search engine for tracking emotional content and triggers</h2></div> </div>
+            return <div className='empty-search'> 
+            <div className='overlayer-color'>
+                <h2>A search engine for tracking emotional content and triggers</h2>
+            </div> 
+        </div>
         } else if(this.state.data.length == 1){
             return <p>Not Found</p>
         }else if(this.state.data.length == 2){

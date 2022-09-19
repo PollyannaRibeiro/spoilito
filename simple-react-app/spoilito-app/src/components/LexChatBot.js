@@ -46,13 +46,12 @@ class LexChatbot extends React.Component{
                 backgroundColor="#FFFFFF"
                 height="430px"
                 region="eu-west-2"
-                headerText="Chat with Spolito"
+                headerText="Chat with me"
                 headerStyle={{ backgroundColor: "#ABD5D9", fontSize: "30px" }}
-                greeting={"Hi, how can I help, today?"}
                 debugMode={true}
                 sessionAttributes={{ola: "Hello"}}
                 onChangeFilters={this.onChange.bind(this)}
-                />;
+                />
             </div>
             </>
         );

@@ -1,6 +1,10 @@
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 
+// font-family: 'Roboto', sans-serif;
+// font-family: 'Roboto Condensed', sans-serif;
+// font-family: 'Roboto Flex', sans-serif;
+
 html,
 body {
   height: 100%
@@ -13,6 +17,25 @@ body {
         height: auto;
         object-fit: cover;
     }
+}
+
+.App{
+
+  .App-header{
+    font-family: 'Roboto Flex', sans-serif;
+    font-weight: 400;
+    background-color: rgb(57, 74, 93);
+    p{
+      font-family: 'Roboto', sans-serif;
+      color: rgb(171, 213, 217);
+      font-weight: 300;
+    }
+  }
+
+  .container{
+    overflow-x: hidden;
+  }
+
 }
 
 .bot-div{
@@ -51,7 +74,7 @@ body {
 
 .result-col{
   .empty-search{
-    background-image: url("../img/daniel-mingook-kim-wTkKb4eQOQo-unsplash.jpg");
+    background-image: url("../img/daniele-levis-pelusi-mkMSXR86kYY-unsplash.jpg");
     background-repeat: no-repeat;
     background-size:cover;
     height: 200vh;
@@ -59,7 +82,7 @@ body {
     opacity: 0.8;
     
     .overlayer-color{
-      background-color: black;
+      // background-color: black;
       opacity: 0.5;
       height: 200vh;
       width: 75vw;
@@ -68,16 +91,16 @@ body {
     h2{
       font-size: 3rem;
       text-align: right;
-      padding-left: 0;
+      padding-left: 3em;
       padding-top: 1em;
       padding-right: 10em;
-      color: white;
-      font-family: 'Roboto', sans-serif;
+      color: rgb(63, 92, 97);
+      font-family: 'Roboto Condensed', sans-serif;
       font-weight: 100;
       ;
       
     }
   }
-  overflow-x: hidden;
+  // overflow-x: hidden;
 
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import ArrayHelper from '../../../helpers/arrayHelper';
+import '../../../css/results.scss'
 
 const TypeDefault = "movie";
 
@@ -22,7 +23,7 @@ class TypeForm extends React.Component{
             ArrayHelper.remove(event.target.name, newTypeArray);
         }
 
-        // remove fist element of an array 
+        // remove fist element 
         if (newTypeArray.length > 1) {
            newTypeArray.shift();
         } else if (newTypeArray.length == 0) {
@@ -41,9 +42,8 @@ class TypeForm extends React.Component{
     render(){
         return (
         <>
-            <br></br>
-            Choose the Type:
-            <br></br>
+        <div className='col-12 layout-form'>
+            <h2>Choose the Type:</h2>
             <label>
                 <input 
                     type="checkbox" 
@@ -60,6 +60,7 @@ class TypeForm extends React.Component{
                     onChange = {this.handleInputTypeChange}/>
                 TV show
             </label>
+        </div>
         </>
         );
     }

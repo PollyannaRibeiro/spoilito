@@ -74,15 +74,23 @@ class MovieSearchForm extends React.Component {
 
     render(){
         return (
-            <div className="MovieSearchForm">
-                <form onSubmit={this.handleSubmit}>
+            <div className="MovieSearchForm col-3">
+                <form className='' onSubmit={this.handleSubmit}>
                     
-                    <TypeForm onSubmitValue={this.handleTypeChanges}/>
-                    <GenreForm genreState={this.state.genreValue} onSubmitValue={this.handleGenreChanges}/>
-                    <TriggerForm triggerState={this.state.triggerValue} onSubmitValue={this.handleTriggerChanges} />
+                    <TypeForm 
+                        onSubmitValue={this.handleTypeChanges}/>
+                    <GenreForm 
+                        genreState={this.state.genreValue} 
+                        onSubmitValue={this.handleGenreChanges}/>
+                    <TriggerForm 
+                        triggerState={this.state.triggerValue} 
+                        onSubmitValue={this.handleTriggerChanges} />
                     
-                    <br></br>
-                    <input type="submit" value="Submit" />
+                    
+                    <div className='col-8 text-left'>
+                        <input className='btn btn-dark' type="submit" value="Submit" />
+                    </div>
+                    
                 </form>
 
             </div>);

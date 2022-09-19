@@ -14,14 +14,13 @@ class TriggerForm extends React.Component{
     }
 
     componentDidUpdate(prevProps) {
-        console.log("😰", this.props.triggerState);
 
         if (prevProps.triggerState === this.props.triggerState ||
             prevProps.triggerState.join(".") === this.props.triggerState.join(".")) {
             return;
         }
 
-        console.log("🥶🥶", this.props.triggerState);
+        console.log("😱", this.props.triggerState);
 
         if (this.props.genreState == []){
             this.setState({
@@ -74,49 +73,65 @@ class TriggerForm extends React.Component{
     render(){
         return (
         <>
-            <br></br>
-            I don't want to watch movies that contain the following triggers:
-            <br></br>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="trigger-none" 
-                    checked={this.state.triggerState.includes("trigger-none")}
-                    onChange={this.handleInputTriggerChange}/>
-                Don't Worry with me 
-            </label>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="isAdult" 
-                    checked={this.state.triggerState.includes("isAdult")}
-                    onChange={this.handleInputTriggerChange}/>
-                18+
-            </label>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="childAbuse" 
-                    checked={this.state.triggerState.includes("childAbuse")}
-                    onChange={this.handleInputTriggerChange}/>
-                child sex abuse
-            </label>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="sexualHar" 
-                    checked={this.state.triggerState.includes("sexualHar")}
-                    onChange={this.handleInputTriggerChange}/>
-                sexual harassment
-            </label>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="sexualAssault" 
-                    checked={this.state.triggerState.includes("sexualAssault")}
-                    onChange={this.handleInputTriggerChange}/>
-                sexual assault or rape
-            </label>
+        <div className='col-12 layout-form'>
+            <h2>Triggers to avoid:</h2>
+            <ul>
+                <li>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            name="trigger-none" 
+                            checked={this.state.triggerState.includes("trigger-none")}
+                            onChange={this.handleInputTriggerChange}/>
+                        No worries 
+                    </label>
+                </li>
+
+                <li>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            name="isAdult" 
+                            checked={this.state.triggerState.includes("isAdult")}
+                            onChange={this.handleInputTriggerChange}/>
+                        sexual content (18+)
+                    </label>
+                </li>
+                
+                <li>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            name="childAbuse" 
+                            checked={this.state.triggerState.includes("childAbuse")}
+                            onChange={this.handleInputTriggerChange}/>
+                        child abuse
+                    </label>
+                </li>
+
+                <li>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            name="sexualHar" 
+                            checked={this.state.triggerState.includes("sexualHar")}
+                            onChange={this.handleInputTriggerChange}/>
+                        sexual harassment
+                    </label>
+                </li>
+
+                <li>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            name="sexualAssault" 
+                            checked={this.state.triggerState.includes("sexualAssault")}
+                            onChange={this.handleInputTriggerChange}/>
+                        sexual assault or rape
+                    </label>
+                </li>
+            </ul>  
+        </div>
         </>
         );
     }
